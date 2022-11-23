@@ -115,3 +115,85 @@ const data = [
   Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
   Eklediğiniz yeni haberi görmek için sayfayı yenileyin.
 */
+
+function haberYapici(haber) {
+  const yeniHaber = document.createElement("div");
+  yeniHaber.classList.add("article");
+
+  const header = document.createElement("h2");
+  header.textContent = haber["baslik"];
+  yeniHaber.appendChild(header);
+
+  const tarih = document.createElement("p");
+  tarih.setAttribute("class", "tarih");
+  header.textContent = haber["tarih"];
+  yeniHaber.appendChild(tarih);
+
+  const paragraf1 = document.createElement("p");
+  paragraf1.textContent = haber.ilkParagraf
+  yeniHaber.appendChild(paragraf1);
+
+  const paragraf2 = document.createElement("p");
+  paragraf2.textContent = haber.ikinciParagraf
+  yeniHaber.appendChild(paragraf2);
+
+  const paragraf3 = document.createElement("p");
+  paragraf3.textContent = haber.ucuncuParagraf
+  yeniHaber.appendChild(paragraf3);
+
+
+  const button = document.createElement("span");
+  button.classList.add("expandButton");
+  button.textContent = "+";
+
+  button.addEventListener("click", (event) => {
+
+    if (document.queryCommandValue(".article-open") != null && !event.target.parentElement.classList.contains("article-open")) {
+      document.querySelector(".article-open").classList.remove("article-open");
+    }
+    
+    event.target.parentElement.classList.toggle("article-open");
+  })
+  yeniHaber.appendChild(button);
+
+return yeniHaber;
+
+}
+
+
+const tumHaberler = data.map((item) => {
+  return haberYapici(item);
+})
+
+const haberBolumu = document.querySelector("div.articles");
+
+tumHaberler.forEach((item) => {
+  haberBolumu.appendChild(item);
+  }
+)
+
+
+function menuYapici(menuElemanlari) {
+  const menu = document.createElement("div");
+  menu.classList.add("menu");
+
+  const _ul = document.createElement("ul");
+  
+
+  for(let i=0; i<menuElemanlari.length; i++) {
+    const _li = document.createElement("li");
+    _li.textContent = menuElemanlari[i];
+    _ul.appendChild(_li);
+  }
+
+  menu.appendChild(_ul);
+
+  const menuButton = document.querySelector(".menu-button");
+    menuButton.addEventListener("click", (e) => {
+      document.querySelector("div.menu").classList.toggle("menu--open");
+    });
+
+    return menu;
+}
+const _header = document.querySelector(".header");
+_header.appendChild(menuYapici(menuelemanlari));
