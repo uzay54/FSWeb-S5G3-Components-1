@@ -151,7 +151,7 @@ function haberYapici(haber) {
     if (document.queryCommandValue(".article-open") != null && !event.target.parentElement.classList.contains("article-open")) {
       document.querySelector(".article-open").classList.remove("article-open");
     }
-    
+
     event.target.parentElement.classList.toggle("article-open");
   })
   yeniHaber.appendChild(button);
@@ -165,35 +165,10 @@ const tumHaberler = data.map((item) => {
   return haberYapici(item);
 })
 
-const haberBolumu = document.querySelector("div.articles");
+const haberBolumu = document.querySelector(".articles");
 
 tumHaberler.forEach((item) => {
   haberBolumu.appendChild(item);
   }
 )
 
-
-function menuYapici(menuElemanlari) {
-  const menu = document.createElement("div");
-  menu.classList.add("menu");
-
-  const _ul = document.createElement("ul");
-  
-
-  for(let i=0; i<menuElemanlari.length; i++) {
-    const _li = document.createElement("li");
-    _li.textContent = menuElemanlari[i];
-    _ul.appendChild(_li);
-  }
-
-  menu.appendChild(_ul);
-
-  const menuButton = document.querySelector(".menu-button");
-    menuButton.addEventListener("click", (e) => {
-      document.querySelector("div.menu").classList.toggle("menu--open");
-    });
-
-    return menu;
-}
-const _header = document.querySelector(".header");
-_header.appendChild(menuYapici(menuelemanlari));
