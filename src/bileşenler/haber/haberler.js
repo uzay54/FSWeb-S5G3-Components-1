@@ -148,7 +148,7 @@ function haberYapici(haber) {
 
   button.addEventListener("click", (event) => {
 
-    if (document.queryCommandValue(".article-open") != null && !event.target.parentElement.classList.contains("article-open")) {
+    if (document.querySelector(".article-open") != null && !event.target.parentElement.classList.contains("article-open")) {
       document.querySelector(".article-open").classList.remove("article-open");
     }
 
