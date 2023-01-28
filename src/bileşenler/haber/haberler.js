@@ -94,82 +94,114 @@ const data = [
   Adım 1: Haber oluşturmak için 'haberYapici' adında bir bileşen(component) oluşturun.
   Bileşeniniz, argümanı haberleri içeren dizi olarak alan bir fonksiyon olacak,
   ve aşağıdaki gibi görünen bir DOM düğümü döndürecek:
-
   <div class="article">
     <h2>{haber başlığı}</h2>
     <p class="tarih">{haber tarihi}</p>
-
     {üç ayrı paragraf elementi}
-
     <span class="expandButton">+</span>
   </div>
-
   Adım 2: Hala `haberYapici` içindeyiz, span.expandButton 'a bir click event dinleyici ekleyin.
   Bu dinleyici div.article öğesine 'article-open' class'ını ekleyip/çıkaracak (toogle).
-
   Adım 3: Fonksiyonunuzdan bir öğe döndürmeyi unutmayın.
-
   Adım 4: Fonksiyonunuzun dışında, tüm datayı döngüye sokun(loop). Bir div.article öğesi oluşturmak ve bunu div.articles içindeki DOM'a eklemek için
   her yinelemede oluşturduğunuz bileşeninizi kullanacaksınız(bknz. index.html).
-
   Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
   Eklediğiniz yeni haberi görmek için sayfayı yenileyin.
 */
-const articles = document.querySelector(".articles")
-
-function haberYapici(haber) {
-  const yeniHaber = document.createElement("div");
-  yeniHaber.classList.add("article");
-
-  const header = document.createElement("h2");
-  header.textContent = haber["baslik"];
-  yeniHaber.appendChild(header);
-
-  const tarih = document.createElement("p");
-  tarih.setAttribute("class", "tarih");
-  tarih.textContent = haber["tarih"];
-  yeniHaber.appendChild(tarih);
-
-  const paragraf1 = document.createElement("p");
-  paragraf1.textContent = haber.ilkParagraf
-  yeniHaber.appendChild(paragraf1);
-
-  const paragraf2 = document.createElement("p");
-  paragraf2.textContent = haber.ikinciParagraf
-  yeniHaber.appendChild(paragraf2);
-
-  const paragraf3 = document.createElement("p");
-  paragraf3.textContent = haber.ucuncuParagraf
-  yeniHaber.appendChild(paragraf3);
 
 
-  const button = document.createElement("span");
-  button.classList.add("expandButton");
-  button.textContent = "+";
+let articles = document.querySelector(".articles")
 
-  button.addEventListener("click", (event) => {
+function haberYapici(dataArr) {
+  const haberDiv = document.createElement("div")
+  haberDiv.classList.add("article")
+  
+  const h2 = document.createElement("h2")
+  h2.textContent=dataArr.baslik
+  haberDiv.appendChild(h2)
 
-    if (document.querySelector(".article-open") != null && !event.target.parentElement.classList.contains("article-open")) {
+  const tarih = document.createElement("p")
+  tarih.textContent =dataArr.tarih;
+  tarih.classList.add("tarih")
+  haberDiv.appendChild(tarih)
+
+  const firstParagraph = document.createElement("p")
+  firstParagraph.textContent =dataArr.ilkParagraf
+  haberDiv.appendChild(firstParagraph)
+
+  const secondParagraph = document.createElement("p")
+  secondParagraph.textContent =dataArr.ikinciParagraf
+  haberDiv.appendChild(secondParagraph)
+
+  const thirdParagraph = document.createElement("p")
+  thirdParagraph.textContent =dataArr.ucuncuParagraf
+  haberDiv.appendChild(thirdParagraph)
+  
+  let span = document.createElement("span")
+
+  span.classList.add("expandButton");
+  span.textContent = "+";
+  haberDiv.appendChild(span)
+
+   //ADIM 2
+  span.addEventListener("click", () => {
+    
+    if(document.querySelector(".article-open") !=null && !haberDiv.classList.contains("article-open")) {
       document.querySelector(".article-open").classList.remove("article-open");
+     
     }
 
-    event.target.parentElement.classList.toggle("article-open");
+    
+    haberDiv.classList.toggle("article-open")
+
+    //event.target.uparentElement.classList.toogle("article-open")
   })
-  yeniHaber.appendChild(button);
 
-return yeniHaber;
-
+  return haberDiv;
 }
 
+// console.log(haberYapici(data))
 
-const tumHaberler = data.map((item) => {
-  return haberYapici(item);
+//YÖNTEM 1
+
+// data.forEach((haber) => {
+//   let bilesen = haberYapici(haber);
+
+//   articles.appendChild(bilesen);
+// })
+
+//YÖNTEM 2
+
+let tumHaberler = data.map((haber) => {
+  return haberYapici(haber);
 })
 
-const haberBolumu = document.querySelector(".articles");
+tumHaberler.forEach((hbr) => {
+  articles.appendChild(hbr);
+})
 
-tumHaberler.forEach((item) => {
-  haberBolumu.appendChild(item);
-  }
-)
 
+
+
+
+//--------------------------------------------------------------------//
+
+
+
+
+
+// Yontem 1
+// dugmeYazilari.forEach((yazi) => {
+  
+//   let btn = dugmeYarat(yazi);
+  
+//   container.appendChild(btn);
+// });
+//Yöntem 2
+// let takipciler1 = takipciler.map((takipci) => {
+//   return takipciBilesenYarat(takipci);
+// })
+
+// takipciler1.forEach((tkpc) => {
+//   container.appendChild(tkpc);
+// })

@@ -12,50 +12,53 @@ let menuElemanlari = [
 
 /*
   Adım 1: Aşağıdaki etiketlee gibi bir menü oluşturmak için 'menuYapici' adlı bir bileşen yazın:
-
   <div class="menu">
     <ul>
       {tüm menü elemanları <li> içlerine}
     </ul>
   </div>
-
   'menuYapici' fonksiyonu tek argümanı olarak bir menü elemanları dizisini alır (birinci parametre).
-
   Adım 2: Fonksiyonun içinde, dizideki her öğe için bir liste <li> öğesi oluşturarak dizi üzerinde yineleme yapın.
   Tüm bu öğeleri <ul>'a ekleyin
-
   Adım 3: Hala fonksiyon içindeyiz, DOM'dan menü düğmesini seçin ('menu-button' sınıfına(class) sahip öğe).
-
   Adım 4: Menü butonuna bir `click` event dinleyicisi ekleyin. Butona her tıklanıldığında div.menu classına `menu--open`('menu' class'ına sahip olan div) ekleyip/silecek(toogle).
   
   İPUCU: Javascript'te toogle metotları bir öğeyi bir elemana ekleyip/çıkarmaya yarar. Örnek olarak bir öğeye tıklandığında bir class toogle'ı kullanıldığında, o öğreye tıklandığında eğer o class ismi öğede yoksa ekler, eğer o class ismi öğede varsa siler. Toogle - aç kapa manasına da gelir.
-
   Adım 5: Oluştrulan div.menu 'yü döndürmeyi unutmayın.
-
   Adım 6: 'menuYapici' fonksiyonunu ve 'menuElemanlari' dizisini kullanarak menüyü oluşturun, ve döndürülen menüyü header'e ekleyin.
 */
 
-function menuYapici(menuElemanlari) {
-  const menu = document.createElement("div");
-  menu.classList.add("menu");
 
-  const _ul = document.createElement("ul");
+function menuYapici(menuElemanlari) {
+
+const menu = document.createElement("div");
+menu.classList.add("menu")
+
+ const list = document.createElement("ul");
   
 
-  for(let i=0; i<menuElemanlari.length; i++) {
-    const _li = document.createElement("li");
-    _li.textContent = menuElemanlari[i];
-    _ul.appendChild(_li);
-  }
+ for (let i = 0; i < menuElemanlari.length; i++) {
+  const listItems = document.createElement("li");
+  listItems.textContent = menuElemanlari[i];
+  list.appendChild(listItems);
+ }
+ menu.appendChild(list)
 
-  menu.appendChild(_ul);
+ const menuButton = document.querySelector(".menu-button")
 
-  const menuButton = document.querySelector(".menu-button");
-    menuButton.addEventListener("click", (e) => {
-      document.querySelector("div.menu").classList.toggle("menu--open");
-    });
+ menuButton.addEventListener("click", function(e) {
+  console.log("tıklandı")
+  menu.classList.toggle("menu--open")
+ })
 
-    return menu;
+ return menu;
 }
-const _header = document.querySelector(".header");
-_header.appendChild(menuYapici(menuElemanlari));
+
+const header = document.querySelector(".header")
+
+header.appendChild(menuYapici(menuElemanlari))
+
+// menuElemanlari.forEach((menuler) => {
+//   let menuItems = menuYapici(menuler);
+//   header.appendChild(menuItems)
+// })
